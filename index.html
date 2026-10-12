@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111c3a">
+  <title>Smart Attendance | ANURAG UNIVERSITY</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #1e293b;
+      background: #f5f7fc;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1160px, 92%);
+      margin: auto;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .navbar {
+      min-height: 78px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #111c3a;
+    }
+
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: #4f46e5;
+      color: white;
+      font-size: 24px;
+    }
+
+    .brand h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .brand p {
+      font-size: 10px;
+      letter-spacing: 1px;
+      margin: 0;
+      color: #64748b;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      color: #334155;
+    }
+
+    .nav-links a:hover {
+      color: #4f46e5;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 20px;
+      border-radius: 10px;
+      background: #4f46e5;
+      color: white;
+      border: 0;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+
+    .btn:hover {
+      background: #3730a3;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 1px solid #ffffff80;
+    }
+
+    .btn-outline:hover {
+      background: #ffffff15;
+      color: white;
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid #e2e8f0;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 75px 0;
+      color: white;
+      background:
+        radial-gradient(circle at 85% 20%, #5146c9, transparent 35%),
+        linear-gradient(125deg, #111c3a, #263b70);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #ffffff15;
+      border: 1px solid #ffffff40;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 12px;
+      margin-bottom: 22px;
+    }
+
+    .hero h2 {
+      font-size: clamp(38px, 5vw, 62px);
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      margin: 0 0 22px;
+    }
+
+    .hero h2 span {
+      color: #a5b4fc;
+    }
+
+    .hero-description {
+      max-width: 580px;
+      color: #d6def0;
+      font-size: 15px;
+      line-height: 1.9;
+      margin-bottom: 28px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .preview {
+      background: white;
+      color: #1e293b;
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 25px 60px #0003;
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .preview-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .preview-header p {
+      margin: 4px 0 0;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .status {
+      background: #dcfce7;
+      color: #166534;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+    }
+
+    .preview-banner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px;
+      background: #eef2ff;
+      border-radius: 14px;
+      margin-bottom: 16px;
+    }
+
+    .face-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      background: white;
+      border-radius: 13px;
+      font-size: 25px;
+      flex-shrink: 0;
+    }
+
+    .preview-banner h4 {
+      margin: 0;
+    }
+
+    .preview-banner p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+    }
+
+    .stat span {
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      color: #111c3a;
+    }
+
+    .preview-footer {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid #e2e8f0;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .quick-stats {
+      margin-top: -25px;
+      position: relative;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: white;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 35px #0f172a0a;
+      border-radius: 16px;
+      padding: 22px 10px;
+    }
+
+    .quick-stat {
+      text-align: center;
+      border-right: 1px solid #e2e8f0;
+    }
+
+    .quick-stat:last-child {
+      border-right: 0;
+    }
+
+    .quick-stat strong {
+      display: block;
+      font-size: 23px;
+    }
+
+    .quick-stat span {
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .section {
+      padding: 70px 0;
+    }
+
+    .heading {
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      color: #4f46e5;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .heading h2 {
+      margin: 8px 0;
+      font-size: clamp(27px, 4vw, 36px);
+      letter-spacing: -.8px;
+    }
+
+    .heading p {
+      max-width: 650px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 17px;
+      padding: 26px;
+      transition: .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #c7d2fe;
+      box-shadow: 0 12px 30px #0f172a0c;
+    }
+
+    .feature-icon {
+      width: 51px;
+      height: 51px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: #eef2ff;
+      font-size: 25px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin: 0 0 8px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 18px;
+    }
+
+    .card-link {
+      color: #4f46e5;
+      font-weight: 750;
+      font-size: 13px;
+    }
+
+    .card-link:hover {
+      text-decoration: underline;
+    }
+
+    .registration-panel {
+      background: white;
+      padding: 34px;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px #0f172a08;
+    }
+
+    .registration-banner {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: linear-gradient(110deg, #eef2ff, #dfe6ff);
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+
+    .registration-banner .face-icon {
+      width: 70px;
+      height: 70px;
+      font-size: 30px;
+    }
+
+    .registration-banner h3 {
+      margin: 0 0 5px;
+    }
+
+    .registration-banner p {
+      margin: 0;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .dashboard-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 17px;
+      padding: 25px;
+    }
+
+    .dashboard-card h3 {
+      margin-top: 0;
+    }
+
+    .dashboard-card p {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .record {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .record:last-child {
+      border-bottom: 0;
+    }
+
+    .record h4 {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .record p {
+      margin: 4px 0 0;
+      font-size: 11px;
+    }
+
+    .pending {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .how-section {
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .step {
+      padding: 24px;
+      background: #f5f7fc;
+      border-radius: 15px;
+    }
+
+    .step-number {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: white;
+      background: #4f46e5;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .step p {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    footer {
+      background: #111c3a;
+      color: white;
+      padding: 35px 0;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .footer-content h3 {
+      margin: 0 0 5px;
+      font-size: 17px;
+    }
+
+    .footer-content p {
+      color: #cbd5e1;
+      font-size: 12px;
+      margin: 5px 0;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 13px;
+    }
+
+    .footer-links a {
+      color: #e2e8f0;
+    }
+
+    .footer-links a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .preview {
+        max-width: 550px;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+      .navbar {
+        min-height: 68px;
+      }
+
+      .brand h1 {
+        font-size: 13px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 68px;
+        left: 0;
+        right: 0;
+        padding: 20px 5%;
+        background: white;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .hero {
+        padding: 50px 0;
+      }
+
+      .hero h2 {
+        font-size: 40px;
+      }
+
+      .section {
+        padding: 50px 0;
+      }
+
+      .features-grid,
+      .dashboard-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .registration-panel {
+        padding: 20px;
+      }
+
+      .registration-banner {
+        align-items: flex-start;
+        padding: 18px;
+      }
+
+      .quick-stat strong {
+        font-size: 19px;
+      }
+
+      .quick-stat span {
+        font-size: 10px;
+      }
+
+      .footer-content {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container navbar">
+
+      <a href="index.html" class="brand">
+        <div class="brand-icon">🎓</div>
+        <div>
+          <h1>ANURAG UNIVERSITY</h1>
+          <p>SMART CAMPUS · SMARTER FUTURE</p>
+        </div>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle"
+              aria-label="Toggle navigation"
+              aria-expanded="false">
+        ☰
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="register.html">Register Student</a>
+        <a href="attendance.html">Mark Attendance</a>
+        <a href="records.html">Records</a>
+        <a href="dashboard.html" class="btn">Student Dashboard ↗</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+
+        <div>
+          <div class="tag">● SMART CAMPUS ATTENDANCE PORTAL</div>
+
+          <h2>
+            Smart Attendance.<br>
+            <span>Smarter Education.</span>
+          </h2>
+
+          <p class="hero-description">
+            Welcome to ANURAG UNIVERSITY's Face Recognition
+            Attendance System. Manage student registration, monitor
+            attendance and access records through one digital platform.
+          </p>
+
+          <div class="actions">
+            <a href="register.html" class="btn">
+              + Register Student →
+            </a>
+
+            <a href="dashboard.html" class="btn btn-outline">
+              Student Dashboard →
+            </a>
+          </div>
+        </div>
+
+        <div class="preview">
+          <div class="preview-header">
+            <div>
+              <h3>System Preview</h3>
+              <p>Student attendance services</p>
+            </div>
+            <span class="status">Portal</span>
+          </div>
+
+          <div class="preview-banner">
+            <div class="face-icon">👤</div>
+            <div>
+              <h4>Face Recognition</h4>
+              <p>Student verification system</p>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat">
+              <span>Registered Students</span>
+              <strong id="studentCount">0</strong>
+            </div>
+
+            <div class="stat">
+              <span>Attendance Today</span>
+              <strong id="todayCount">0</strong>
+            </div>
+
+            <div class="stat">
+              <span>Present Today</span>
+              <strong id="presentCount">0</strong>
+            </div>
+
+            <div class="stat">
+              <span>Attendance Records</span>
+              <strong id="recordCount">0</strong>
+            </div>
+          </div>
+
+          <div class="preview-footer">
+            Attendance statistics are read from this browser's saved records.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUICK STATS -->
+    <div class="container quick-stats">
+      <div class="quick-grid">
+        <div class="quick-stat">
+          <strong>01</strong>
+          <span>Centralized Portal</span>
+        </div>
+        <div class="quick-stat">
+          <strong>24/7</strong>
+          <span>Portal Access</span>
+        </div>
+        <div class="quick-stat">
+          <strong>Digital</strong>
+          <span>Attendance Workflow</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <section class="section" id="features">
+      <div class="container">
+
+        <div class="heading">
+          <span class="eyebrow">Student Services</span>
+          <h2>Everything you need in one place</h2>
+          <p>Access the essential features of your attendance portal.</p>
+        </div>
+
+        <div class="features-grid">
+
+          <article class="card">
+            <div class="feature-icon">🎓</div>
+            <h3>Student Registration</h3>
+            <p>Enter student details and enroll student information.</p>
+            <a class="card-link" href="register.html">Register now →</a>
+          </article>
+
+          <article class="card">
+            <div class="feature-icon">📷</div>
+            <h3>Mark Attendance</h3>
+            <p>Open your attendance page to use the connected camera workflow.</p>
+            <a class="card-link" href="attendance.html">Open attendance →</a>
+          </article>
+
+          <article class="card">
+            <div class="feature-icon">📋</div>
+            <h3>Attendance Records</h3>
+            <p>View recorded student attendance and history.</p>
+            <a class="card-link" href="records.html">View records →</a>
+          </article>
+
+          <article class="card">
+            <div class="feature-icon">📊</div>
+            <h3>Student Dashboard</h3>
+            <p>Open the student dashboard to view attendance summaries.</p>
+            <a class="card-link" href="dashboard.html">Open dashboard →</a>
+          </article>
+
+          <article class="card">
+            <div class="feature-icon">🕒</div>
+            <h3>Attendance Reports</h3>
+            <p>Access attendance history through the records page.</p>
+            <a class="card-link" href="records.html">Explore reports →</a>
+          </article>
+
+          <article class="card">
+            <div class="feature-icon">⚙️</div>
+            <h3>System Integration</h3>
+            <p>Integrate the camera, recognition engine and database.</p>
+            <a class="card-link" href="#how-it-works">Learn more →</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTRATION: CONNECTED BUTTON -->
+    <section class="section" id="registration">
+      <div class="container">
+
+        <div class="heading">
+          <span class="eyebrow">Enrollment</span>
+          <h2>Student Registration</h2>
+          <p>Register students through your existing registration page.</p>
+        </div>
+
+        <div class="registration-panel">
+
+          <div class="registration-banner">
+            <div class="face-icon">🎓</div>
+
+            <div>
+              <h3>Register a New Student</h3>
+              <p>
+                Open the student registration form to enter student
+                details and enroll an authorized photograph.
+              </p>
+            </div>
+          </div>
+
+          <!-- CONNECTED TO register.html -->
+          <a href="register.html" class="btn">
+            Continue to Registration →
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section how-section" id="how-it-works">
+      <div class="container">
+
+        <div class="heading">
+          <span class="eyebrow">Simple Workflow</span>
+          <h2>How the system works</h2>
+          <p>Three steps to manage digital attendance.</p>
+        </div>
+
+        <div class="steps">
+
+          <article class="step">
+            <div class="step-number">01</div>
+            <h3>Register Students</h3>
+            <p>Enter student details on the registration page.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">02</div>
+            <h3>Record Attendance</h3>
+            <p>Open the attendance page and follow its recording workflow.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">03</div>
+            <h3>View Records</h3>
+            <p>Open attendance records and dashboard pages.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD LINKS -->
+    <section class="section">
+      <div class="container">
+
+        <div class="heading">
+          <span class="eyebrow">Quick Access</span>
+          <h2>Manage attendance</h2>
+          <p>Open the required section of your project.</p>
+        </div>
+
+        <div class="dashboard-grid">
+
+          <div class="dashboard-card">
+            <h3>Mark Attendance</h3>
+            <p>Open the attendance interface.</p>
+
+            <div class="record">
+              <div>
+                <h4>Camera & Attendance</h4>
+                <p>Attendance application</p>
+              </div>
+              <span class="pending">Open page</span>
+            </div>
+
+            <br>
+
+            <a href="attendance.html" class="btn">
+              Mark Attendance →
+            </a>
+          </div>
+
+          <div class="dashboard-card">
+            <h3>Attendance Records</h3>
+            <p>View saved attendance history.</p>
+
+            <div class="record">
+              <div>
+                <h4>Student Records</h4>
+                <p>Attendance history and reports</p>
+              </div>
+              <span class="pending">Open page</span>
+            </div>
+
+            <br>
+
+            <a href="records.html" class="btn">
+              View Records →
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER: WORKING NAVIGATION LINKS -->
+  <footer>
+    <div class="container footer-content">
+
+      <div>
+        <h3>ANURAG UNIVERSITY</h3>
+        <p>Smart Attendance Management System</p>
+        <p>© <span id="year"></span> Student Services Portal</p>
+      </div>
+
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="#features">Services</a>
+        <a href="register.html">Register Student</a>
+        <a href="attendance.html">Mark Attendance</a>
+        <a href="records.html">Records</a>
+        <a href="dashboard.html">Dashboard</a>
+      </nav>
+
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+
+  <script>
+    // Mobile navigation
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", function () {
+      const isOpen = navLinks.classList.toggle("open");
+
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    // Read available local browser statistics.
+    // These values are summaries, not server-verified figures.
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    try {
+      const students = JSON.parse(
+        localStorage.getItem("anuragStudents") || "[]"
+      );
+
+      const records = JSON.parse(
+        localStorage.getItem("anuragAttendanceRecords") || "[]"
+      );
+
+      const today = new Date();
+      const todayKey = [
+        today.getFullYear(),
+        String(today.getMonth() + 1).padStart(2, "0"),
+        String(today.getDate()).padStart(2, "0")
+      ].join("-");
+
+      const todayRecords = Array.isArray(records)
+        ? records.filter(record => record.date === todayKey)
+        : [];
+
+      document.getElementById("studentCount").textContent =
+        Array.isArray(students) ? students.length : 0;
+
+      document.getElementById("todayCount").textContent =
+        todayRecords.length;
+
+      document.getElementById("presentCount").textContent =
+        todayRecords.filter(record => record.status === "Present").length;
+
+      document.getElementById("recordCount").textContent =
+        Array.isArray(records) ? records.length : 0;
+    } catch (error) {
+      console.error("Unable to load dashboard statistics:", error);
+    }
+  </script>
+
+</body>
+</html>

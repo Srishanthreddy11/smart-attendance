@@ -1,0 +1,661 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Dashboard | ANURAG UNIVERSITY</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --purple: #5145e5;
+  --navy: #172554;
+  --muted: #7181a1;
+  --border: #e0e7f7;
+  --background: #f3f5ff;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--navy);
+  background: var(--background);
+  min-height: 100vh;
+}
+
+header {
+  background: white;
+  padding: 17px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 18px #1725540c;
+}
+
+.brand {
+  text-decoration: none;
+  color: var(--navy);
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.brand small {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: #344568;
+  padding: 11px 17px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+nav a:hover,
+nav a.active {
+  color: white;
+  background: var(--purple);
+}
+
+main {
+  max-width: 1400px;
+  width: 92%;
+  margin: 32px auto;
+}
+
+.tag {
+  display: inline-block;
+  background: #e9e8ff;
+  color: var(--purple);
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: 750;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: clamp(28px, 3vw, 40px);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 26px;
+  line-height: 1.6;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 27px;
+}
+
+.stat-card {
+  background: white;
+  padding: 23px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  box-shadow: 0 7px 25px #293a8009;
+  min-width: 0;
+}
+
+.stat-icon {
+  width: 62px;
+  height: 62px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 27px;
+  background: #eeedff;
+}
+
+.stat-icon.green {
+  background: #dcfce9;
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 650;
+  color: #536486;
+  line-height: 1.5;
+}
+
+.stat-value {
+  font-size: 34px;
+  font-weight: 800;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(300px, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.panel {
+  background: white;
+  border-radius: 13px;
+  padding: 24px;
+  box-shadow: 0 7px 25px #293a8009;
+  min-width: 0;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.panel-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #eeedff;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  flex-shrink: 0;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+.panel-description {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 22px 62px;
+  line-height: 1.5;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+  min-width: 590px;
+}
+
+thead {
+  background: #f4f5ff;
+  color: #526487;
+}
+
+th, td {
+  padding: 17px 14px;
+  border-bottom: 1px solid #e8edf8;
+  white-space: nowrap;
+}
+
+th {
+  font-weight: 700;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #fafaff;
+}
+
+.status {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.present {
+  background: #dcfce9;
+  color: #12864e;
+}
+
+.absent {
+  background: #ffe4e6;
+  color: #be123c;
+}
+
+.late {
+  background: #fff1cf;
+  color: #a76b00;
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 30px;
+  line-height: 1.8;
+}
+
+.quick-action {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-decoration: none;
+  color: var(--navy);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 17px;
+  margin-top: 14px;
+  transition: 0.2s;
+}
+
+.quick-action:hover {
+  border-color: var(--purple);
+  background: #fafaff;
+  transform: translateY(-2px);
+}
+
+.action-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: #eeedff;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.action-text {
+  min-width: 0;
+}
+
+.action-text strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+.action-text small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.arrow {
+  margin-left: auto;
+  color: var(--purple);
+  font-size: 22px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 24px;
+  text-decoration: none;
+  color: var(--purple);
+  font-weight: 650;
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  border-top: 1px solid #e2e8fa;
+  color: var(--muted);
+  padding: 24px 12px;
+  font-size: 13px;
+}
+
+@media (max-width: 1050px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 16px 4%;
+  }
+
+  .brand {
+    font-size: 19px;
+  }
+
+  nav a {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+
+  main {
+    width: 94%;
+    margin: 24px auto;
+  }
+
+  .stats {
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 15px;
+    gap: 10px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .stat-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 21px;
+  }
+
+  .stat-value {
+    font-size: 28px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  .panel-description {
+    margin-left: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="index.html">
+    🎓 ANURAG UNIVERSITY
+    <small>SMART CAMPUS · SMARTER FUTURE</small>
+  </a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="register.html">Register Student</a>
+    <a href="attendance.html">Mark Attendance</a>
+    <a href="dashboard.html" class="active">Dashboard</a>
+  </nav>
+</header>
+
+<main>
+  <span class="tag">SMART CAMPUS OVERVIEW</span>
+
+  <h1>Attendance Dashboard</h1>
+
+  <p class="subtitle">
+    Monitor student registrations and attendance activity in one place.
+  </p>
+
+  <section class="stats">
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div>
+        <div class="stat-label">Registered Students</div>
+        <div class="stat-value" id="totalStudents">0</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon green">✅</div>
+      <div>
+        <div class="stat-label">Present Today</div>
+        <div class="stat-value" id="presentToday">0</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">📊</div>
+      <div>
+        <div class="stat-label">Today's Attendance</div>
+        <div class="stat-value" id="attendanceRate">0%</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">📄</div>
+      <div>
+        <div class="stat-label">Total Attendance Records</div>
+        <div class="stat-value" id="totalRecords">0</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-grid">
+
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-icon">🗓️</div>
+        <h2>Recent Attendance</h2>
+      </div>
+
+      <p class="panel-description">
+        The latest attendance records saved in this browser.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Student ID</th>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="attendanceTable"></tbody>
+        </table>
+      </div>
+
+      <div class="empty" id="emptyMessage">
+        No attendance records yet.<br>
+        Start by recording attendance for a student.
+      </div>
+    </div>
+
+    <aside class="panel">
+      <div class="panel-heading">
+        <div class="panel-icon">⚡</div>
+        <h2>Quick Actions</h2>
+      </div>
+
+      <p class="panel-description">
+        Manage students and attendance.
+      </p>
+
+      <a href="register.html" class="quick-action">
+        <div class="action-icon">👤</div>
+        <div class="action-text">
+          <strong>Register New Student</strong>
+          <small>Add a new student to the system.</small>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="attendance.html" class="quick-action">
+        <div class="action-icon">📷</div>
+        <div class="action-text">
+          <strong>Mark Attendance</strong>
+          <small>Record student attendance.</small>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="records.html" class="quick-action">
+        <div class="action-icon">📑</div>
+        <div class="action-text">
+          <strong>View Attendance Records</strong>
+          <small>Check past attendance records.</small>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </aside>
+
+  </section>
+
+  <a class="back-link" href="index.html">← Back to Home</a>
+</main>
+
+<footer>
+  © 2026 ANURAG UNIVERSITY · Smart Attendance System
+</footer>
+
+<script>
+function loadDashboard() {
+  let students = [];
+  let records = [];
+
+  try {
+    students = JSON.parse(
+      localStorage.getItem("anuragStudents") || "[]"
+    );
+
+    records = JSON.parse(
+      localStorage.getItem("anuragAttendanceRecords") || "[]"
+    );
+
+    if (!Array.isArray(students)) students = [];
+    if (!Array.isArray(records)) records = [];
+  } catch (error) {
+    console.error("Unable to read dashboard data.", error);
+  }
+
+  // Use local calendar date to match the attendance page.
+  const now = new Date();
+  const today = [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, "0"),
+    String(now.getDate()).padStart(2, "0")
+  ].join("-");
+
+  const todaysRecords = records.filter(record => record.date === today);
+
+  const presentCount = todaysRecords.filter(record =>
+    String(record.status || "Present").toLowerCase() === "present"
+  ).length;
+
+  const rate = students.length
+    ? Math.round((presentCount / students.length) * 100)
+    : 0;
+
+  document.getElementById("totalStudents").textContent =
+    students.length.toLocaleString();
+
+  document.getElementById("presentToday").textContent =
+    presentCount.toLocaleString();
+
+  document.getElementById("attendanceRate").textContent =
+    Math.min(rate, 100) + "%";
+
+  document.getElementById("totalRecords").textContent =
+    records.length.toLocaleString();
+
+  const table = document.getElementById("attendanceTable");
+  const emptyMessage = document.getElementById("emptyMessage");
+
+  table.replaceChildren();
+
+  const recentRecords = [...records]
+    .sort((a, b) =>
+      String(b.recordedAt || b.date || "").localeCompare(
+        String(a.recordedAt || a.date || "")
+      )
+    )
+    .slice(0, 8);
+
+  emptyMessage.style.display = recentRecords.length ? "none" : "block";
+
+  recentRecords.forEach(record => {
+    const row = document.createElement("tr");
+
+    const timestamp = record.recordedAt
+      ? new Date(record.recordedAt)
+      : null;
+
+    const time = timestamp &&
+      !Number.isNaN(timestamp.getTime())
+      ? timestamp.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      : "—";
+
+    const status = record.status || "Present";
+    const statusClass =
+      status.toLowerCase() === "present" ? "present" :
+      status.toLowerCase() === "late" ? "late" : "absent";
+
+    const values = [
+      record.studentId || "—",
+      record.studentName || record.fullName || "—",
+      record.date || "—",
+      time,
+      status
+    ];
+
+    values.forEach((value, index) => {
+      const cell = document.createElement("td");
+
+      if (index === 4) {
+        const badge = document.createElement("span");
+        badge.className = "status " + statusClass;
+        badge.textContent = value;
+        cell.appendChild(badge);
+      } else {
+        cell.textContent = value;
+      }
+
+      row.appendChild(cell);
+    });
+
+    table.appendChild(row);
+  });
+}
+
+loadDashboard();
+
+// Refresh the displayed figures when returning to this page.
+window.addEventListener("pageshow", loadDashboard);
+window.addEventListener("storage", loadDashboard);
+</script>
+
+</body>
+</html>
+```
