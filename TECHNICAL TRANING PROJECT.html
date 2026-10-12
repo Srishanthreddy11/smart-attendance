@@ -1,0 +1,638 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mark Attendance | ANURAG UNIVERSITY</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f3f5ff;
+      color: #172554;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #fff;
+      padding: 16px 6%;
+      box-shadow: 0 3px 15px #17255412;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      color: #172554;
+      text-decoration: none;
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 11px;
+      color: #687da6;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #26385e;
+      padding: 11px 17px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    nav a.active,
+    nav a:hover {
+      background: #5145e5;
+      color: white;
+    }
+
+    main {
+      max-width: 1250px;
+      width: 92%;
+      margin: 28px auto 50px;
+    }
+
+    .back {
+      display: inline-block;
+      color: #5145e5;
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 12px 45px #293a8010;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: #eeedff;
+      color: #5145e5;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #7181a1;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      border: 1px solid #e0e6f5;
+      border-radius: 12px;
+      padding: 24px;
+      min-width: 0;
+    }
+
+    h2 {
+      font-size: 19px;
+      margin-bottom: 22px;
+    }
+
+    .field {
+      margin-bottom: 19px;
+    }
+
+    label {
+      display: block;
+      font-weight: 650;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .required {
+      color: #7657ee;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #dce3f2;
+      border-radius: 9px;
+      color: #24365b;
+      background: #fff;
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #5145e5;
+      box-shadow: 0 0 0 3px #5145e51a;
+    }
+
+    button {
+      font: inherit;
+      font-size: 14px;
+      font-weight: 650;
+      padding: 13px 16px;
+      border: 0;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .primary {
+      background: #5145e5;
+      color: white;
+    }
+
+    .primary:hover:not(:disabled) {
+      background: #4035c9;
+    }
+
+    .outline {
+      color: #5145e5;
+      background: white;
+      border: 1px solid #665df0;
+    }
+
+    .record-button {
+      width: 100%;
+      margin-top: 3px;
+    }
+
+    .camera {
+      position: relative;
+      height: 235px;
+      background: #172748;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      color: #d3dcef;
+    }
+
+    .camera video,
+    .camera img {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .camera video.visible,
+    .camera img.visible {
+      display: block;
+    }
+
+    .placeholder {
+      text-align: center;
+      line-height: 2;
+    }
+
+    .camera-icon {
+      display: block;
+      font-size: 44px;
+      margin-bottom: 8px;
+    }
+
+    .camera-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .hint {
+      font-size: 13px;
+      color: #7181a1;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    .status {
+      border-top: 1px solid #edf0f8;
+      margin-top: 22px;
+      padding-top: 18px;
+      font-size: 14px;
+      color: #159568;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      color: #7181a1;
+      font-size: 13px;
+      padding: 0 15px 28px;
+    }
+
+    @media (max-width: 800px) {
+      header {
+        padding: 16px 4%;
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav a {
+        padding: 9px;
+        font-size: 12px;
+      }
+
+      .brand {
+        font-size: 19px;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+
+      .camera-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="index.html">
+    🎓 ANURAG UNIVERSITY
+    <small>SMART CAMPUS · SMARTER FUTURE</small>
+  </a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="register.html">Register Student</a>
+    <a href="attendance.html" class="active">Mark Attendance</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<main>
+  <a class="back" href="index.html">← Back to Home</a>
+
+  <div class="card">
+    <span class="tag">ATTENDANCE MANAGEMENT</span>
+    <h1>Mark Attendance</h1>
+    <p class="subtitle">
+      Enter the student's details and capture a reference photo
+      before recording attendance.
+    </p>
+
+    <div class="content">
+
+      <section class="panel">
+        <h2>👤 Student Information</h2>
+
+        <form id="attendanceForm">
+          <div class="field">
+            <label for="studentId">
+              Student ID <span class="required">*</span>
+            </label>
+            <input id="studentId" required
+                   placeholder="e.g. AU2026001">
+          </div>
+
+          <div class="field">
+            <label for="studentName">
+              Student Name <span class="required">*</span>
+            </label>
+            <input id="studentName" required
+                   placeholder="Enter full name">
+          </div>
+
+          <div class="field">
+            <label for="subject">
+              Subject / Class <span class="required">*</span>
+            </label>
+            <input id="subject" required
+                   placeholder="e.g. Computer Science">
+          </div>
+
+          <div class="field">
+            <label for="attendanceDate">
+              Attendance Date <span class="required">*</span>
+            </label>
+            <input id="attendanceDate" type="date" required>
+          </div>
+
+          <button class="primary record-button" type="submit">
+            ✓ Record Attendance
+          </button>
+
+          <p id="message" role="status"></p>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>📷 Student Photo</h2>
+
+        <div class="camera">
+          <video id="cameraVideo" autoplay playsinline muted></video>
+          <img id="photoPreview" alt="Captured student photo">
+
+          <div class="placeholder" id="cameraPlaceholder">
+            <span class="camera-icon">📷</span>
+            <strong>Camera Preview</strong>
+          </div>
+        </div>
+
+        <canvas id="photoCanvas" hidden></canvas>
+
+        <div class="camera-buttons">
+          <button class="outline" id="startCamera" type="button">
+            📷 Start Camera
+          </button>
+
+          <button class="primary" id="capturePhoto"
+                  type="button" disabled>
+            📸 Capture Photo
+          </button>
+        </div>
+
+        <p class="hint">
+          ℹ Position the student in the frame with good lighting.
+        </p>
+
+        <div class="status" id="cameraStatus" role="status">
+          ● Camera is not started
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2026 ANURAG UNIVERSITY · Smart Attendance System
+</footer>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  const form = $("attendanceForm");
+  const video = $("cameraVideo");
+  const preview = $("photoPreview");
+  const canvas = $("photoCanvas");
+
+  let stream = null;
+  let capturedPhoto = "";
+
+  // Set today's date automatically.
+  const today = new Date();
+  const localToday = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0")
+  ].join("-");
+
+  $("attendanceDate").value = localToday;
+
+  // Look up the student using the shared registration storage.
+  $("studentId").addEventListener("change", () => {
+    const id = $("studentId").value.trim();
+
+    try {
+      const students = JSON.parse(
+        localStorage.getItem("anuragStudents") || "[]"
+      );
+
+      const student = students.find(
+        s => String(s.studentId).toLowerCase() === id.toLowerCase()
+      );
+
+      if (student) {
+        $("studentName").value = student.fullName || "";
+        $("subject").value = student.course || student.department || "";
+        $("message").textContent = "Registered student found.";
+        $("message").style.color = "#159568";
+      }
+    } catch (error) {
+      console.error("Could not read student records.", error);
+    }
+  });
+
+  async function startCamera() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      $("cameraStatus").textContent =
+        "Camera unavailable. Open this page using localhost or HTTPS.";
+      return;
+    }
+
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" },
+        audio: false
+      });
+
+      video.srcObject = stream;
+      await video.play();
+
+      video.classList.add("visible");
+      preview.classList.remove("visible");
+      $("cameraPlaceholder").hidden = true;
+
+      $("capturePhoto").disabled = false;
+      $("startCamera").disabled = true;
+      $("cameraStatus").textContent = "● Camera ready";
+    } catch (error) {
+      $("cameraStatus").textContent =
+        "Unable to access camera. Check browser permissions.";
+    }
+  }
+
+  function capturePhoto() {
+    if (!stream || !video.videoWidth) {
+      $("cameraStatus").textContent =
+        "Please start the camera first.";
+      return;
+    }
+
+    const scale = Math.min(1, 800 / video.videoWidth);
+
+    canvas.width = Math.round(video.videoWidth * scale);
+    canvas.height = Math.round(video.videoHeight * scale);
+
+    canvas.getContext("2d").drawImage(
+      video, 0, 0, canvas.width, canvas.height
+    );
+
+    capturedPhoto = canvas.toDataURL("image/jpeg", 0.7);
+    preview.src = capturedPhoto;
+    preview.classList.add("visible");
+
+    $("cameraStatus").textContent = "● Photo captured successfully";
+  }
+
+  function stopCamera() {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+    }
+
+    video.srcObject = null;
+    video.classList.remove("visible");
+
+    $("capturePhoto").disabled = true;
+    $("startCamera").disabled = false;
+  }
+
+  $("startCamera").addEventListener("click", startCamera);
+  $("capturePhoto").addEventListener("click", capturePhoto);
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const studentId = $("studentId").value.trim();
+    const studentName = $("studentName").value.trim();
+    const subject = $("subject").value.trim();
+    const date = $("attendanceDate").value;
+    const message = $("message");
+
+    if (!date) {
+      message.textContent = "Please select an attendance date.";
+      message.style.color = "#dc2626";
+      return;
+    }
+
+    try {
+      const students = JSON.parse(
+        localStorage.getItem("anuragStudents") || "[]"
+      );
+
+      const registered = students.find(
+        s => String(s.studentId).toLowerCase() ===
+             studentId.toLowerCase()
+      );
+
+      if (students.length > 0 && !registered) {
+        message.textContent =
+          "Student ID not found. Register the student first.";
+        message.style.color = "#dc2626";
+        return;
+      }
+
+      if (registered &&
+          registered.fullName.toLowerCase() !== studentName.toLowerCase()) {
+        message.textContent =
+          "The student name does not match the registered ID.";
+        message.style.color = "#dc2626";
+        return;
+      }
+
+      const records = JSON.parse(
+        localStorage.getItem("anuragAttendanceRecords") || "[]"
+      );
+
+      const duplicate = records.some(record =>
+        String(record.studentId).toLowerCase() ===
+          studentId.toLowerCase() &&
+        record.date === date &&
+        String(record.subject).toLowerCase() === subject.toLowerCase()
+      );
+
+      if (duplicate) {
+        message.textContent =
+          "Attendance has already been recorded for this class and date.";
+        message.style.color = "#dc2626";
+        return;
+      }
+
+      records.push({
+        studentId,
+        studentName,
+        subject,
+        date,
+        photo: capturedPhoto,
+        status: "Present",
+        recordedAt: new Date().toISOString()
+      });
+
+      localStorage.setItem(
+        "anuragAttendanceRecords",
+        JSON.stringify(records)
+      );
+
+      message.textContent =
+        "✓ Attendance recorded successfully!";
+      message.style.color = "#159568";
+
+      form.reset();
+      $("attendanceDate").value = localToday;
+      capturedPhoto = "";
+      preview.removeAttribute("src");
+      preview.classList.remove("visible");
+      $("cameraPlaceholder").hidden = false;
+
+      $("cameraStatus").textContent = "● Ready for next student";
+      stopCamera();
+
+    } catch (error) {
+      message.textContent =
+        "Could not save attendance. Browser storage may be full.";
+      message.style.color = "#dc2626";
+    }
+  });
+
+  window.addEventListener("pagehide", stopCamera);
+</script>
+
+</body>
+</html>
+```
